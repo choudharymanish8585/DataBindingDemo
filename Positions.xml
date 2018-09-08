@@ -1,0 +1,36 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes"
+                extends="c:Base" 
+                controller="PositionSearchController"
+                access="global" >
+    <aura:attribute type="Job_Position__c[]" name="positions" access="public" />
+    
+    <aura:attribute type="Job_Position__c" name="selectedPosition" access="public"/>
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    
+    <!-- this event is being fired by nested PositionTile component
+   when user clicks on any position, will handle this event here 
+   to mark the position as selected -->
+    <aura:handler name="onPositionSelect" event="c:PositionSelect" action="{!c.onPositionSelect}" />
+    
+    
+    <lightning:layout horizontalAlign="space">
+        <lightning:layoutItem size="9">
+            <lightning:layout multipleRows="true" horizontalAlign="center">
+                <aura:iteration items="{!v.positions}" var="position">
+                    <lightning:layoutItem padding="around-small" size="12"
+                                          smallDeviceSize="6"
+                                          mediumDeviceSize="4"
+                                          largeDeviceSize="4">
+                        <!-- Calling PositionTile component in loop to display all position result -->
+                        <c:PositionTile position="{#position}" selected="{!v.selectedPosition.Id == position.Id ? true : false}" />
+                    </lightning:layoutItem>
+                </aura:iteration>
+            </lightning:layout>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="3" padding="around-small">
+            <c:PositionDetail position="{!v.selectedPosition}" />
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+</aura:component>
