@@ -1,0 +1,16 @@
+<aura:component access="global" >
+    <aura:attribute name="position" type="Job_Position__c" access="public" />
+    
+    <aura:attribute name="selected" type="boolean" default="false" access="public"/>
+    <aura:registerEvent name="onPositionSelect" type="c:PositionSelect" />
+    
+    <lightning:button variant="neutral" class="{! v.selected ? 'tile selected' : 'tile'}" 
+                      onclick="{!c.onPositionClick}">
+        <div style="{# 'background-image:url(' + v.position.Picture__c + ')'}" class="innertile">
+          <div class="lower-third">
+           <h1 class="slds-truncate">{!v.position.Name}</h1>
+          </div>
+        </div>
+    </lightning:button>
+
+</aura:component>
