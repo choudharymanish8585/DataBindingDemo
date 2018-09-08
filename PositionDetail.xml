@@ -1,0 +1,52 @@
+<aura:component >
+    <aura:attribute type="Job_Position__c" name="position" access="public" />
+    <aura:attribute type="boolean" name="showCardAction" access="public" default="false"/>
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <div class="{! v.position ? null : 'slds-hide'}">
+    <lightning:card iconName="standard:relationship">
+        <aura:set attribute="title">
+            <lightning:formattedText value="{!v.position.Name}" />
+        </aura:set>
+        <aura:set attribute="actions">
+            <aura:if isTrue="{!v.showCardAction}">
+                <lightning:button variant="neutral" label="Full Details" onclick="{!c.onFullDetails}" />
+            </aura:if>
+        </aura:set> 
+        
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6"
+                                  flexibility="true">
+                <div class="slds-p-horizontal_small">
+                    <div class="positionproperty">
+                        <span class="label" id="positionName1">Position Name:</span>
+                        <lightning:formattedText id="positionName" value="{!v.position.Name}" />
+                    </div>
+                    <div class="positionproperty">
+                        <span class="label">Experience Required:</span>
+                        <lightning:formattedNumber id="positionExp" value="{!v.position.Experience_Required__c}" />
+                    </div>
+                    <div class="positionproperty">
+                        <span class="label">Applicant:</span>
+                        <lightning:formattedNumber value="{!v.position.Candidate__c}" />
+                    </div>
+                </div>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6"
+                                  flexibility="true">
+                <div class="imageview" style="{! 'background-image:url(' + v.position.Picture__c + ')'}" />
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:card>
+    <lightning:card iconName="standard:work_type">
+        <aura:set attribute="title">
+            <lightning:formattedText value="Job Description" />
+        </aura:set>
+        <div class="slds-p-horizontal_small">
+            <lightning:formattedText value="{!v.position.Job_Description__c}" />
+        </div>
+        
+    </lightning:card>
+    </div>
+</aura:component>
